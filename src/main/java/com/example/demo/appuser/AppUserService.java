@@ -11,13 +11,20 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AppUserService implements UserDetailsService {
 
- private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
- private final AppUserRepository appUserRepository;
+  private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
 
- @Override
- public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-  return appUserRepository.findByEmail(email)
-    .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
- }
+  private final AppUserRepository appUserRepository;
 
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    Object appUsers = appUserRepository.findByEmail(email);
+    AppUser appUser = null;
+    if (!((String) appUsers).isEmpty()) {
+      appUser = (AppUser) ((Object) appUsers);
+    }
+    if (appUser == null) {
+      throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email));
+    }
+    return appUser;
+  }
 }
