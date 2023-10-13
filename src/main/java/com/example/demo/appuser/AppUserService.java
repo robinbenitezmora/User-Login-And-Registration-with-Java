@@ -27,4 +27,8 @@ public class AppUserService implements UserDetailsService {
     }
     return appUser;
   }
+
+  public String signUpUser(AppUser appUser) {
+    appUserRepository.findByEmail(appUser.getEmail()).
+  }
 }
