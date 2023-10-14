@@ -37,6 +37,8 @@ public class AppUser implements UserDetails {
   private String password;
   @Enumerated(EnumType.STRING)
   private AppUserRole appUserRole;
+  private Boolean locked = false;
+  private Boolean enabled = false;
 
   public AppUser(String name, String username, String email, String password, AppUserRole appUserRole, Boolean locked,
       Boolean enabled) {
@@ -61,6 +63,15 @@ public class AppUser implements UserDetails {
   @Override
   public String getUsername() {
     return email;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  @Override
+  public String getLastName() {
+    return lastName;
   }
 
   @Override
