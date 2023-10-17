@@ -1,5 +1,6 @@
 package com.example.demo.appuser;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +37,7 @@ public class AppUserService implements UserDetailsService {
     return appUser;
   }
 
-  public String signUpUser(AppUser appUser) {
+  public ConfirmationToken signUpUser(AppUser appUser) {
     boolean userExists = appUserRepository.findByEmail(appUser.getEmail()).isPresent();
     if (userExists) {
       throw new IllegalStateException("email already taken");
@@ -44,10 +45,17 @@ public class AppUserService implements UserDetailsService {
     String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
     appUser.setPassword(encodedPassword);
     appUserRepository.save(appUser);
-    String token = UUID.randomUUID().toString();
-    ConfirmationToken confirmationToken = new ConfirmationToken(
-        token, java.time.LocalDateTime.now(), java.time.LocalDateTime.now().plusMinutes(15), appUser);
+    String tokenValue = UUID.randomUUID().toString();
+    ConfirmationToken confirmationToken = new ConfirmationToken(tokenValue, LocalDateTime.now(),
+        LocalDateTime.now().plusMinutes(15), null, appUser);
     confirmationTokenService.saveConfirmationToken(confirmationToken);
-    return token;
+    return confirmationToken;
+  }
+
+  public String confirmToken(String token) {
+    return null;
+  }
+
+  public void enableAppUser(String email) {
   }
 }
