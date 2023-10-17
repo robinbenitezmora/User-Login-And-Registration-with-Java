@@ -14,5 +14,11 @@ public class ConfirmationTokenService {
   confirmationTokenRespository.save(token);
  }
 
- private final ConfirmationTokenRespository confirmationTokenRespository;
+ public void setConfirmedAt(String token) {
+ }
+
+ public Object getToken(String token) {
+  return null;
+ }
+
 }
