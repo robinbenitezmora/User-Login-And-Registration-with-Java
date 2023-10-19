@@ -10,7 +10,6 @@ import ch.qos.logback.classic.Logger;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +29,7 @@ public class EmailService implements EmailSender {
    helper.setTo(to);
    helper.setSubject("Confirm your email");
    helper.setFrom("Hello to everyone");
+   mailSender.send(message);
 
   } catch (MessagingException e) {
    LOGGER.error("failed to send email", e);
