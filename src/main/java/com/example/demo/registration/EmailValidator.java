@@ -1,11 +1,10 @@
 package com.example.demo.registration;
 
-import jakarta.persistence.criteria.Predicate;
+import java.util.function.Predicate;
 
-public class EmailValidator implements Predicate {
+public class EmailValidator implements Predicate<String> {
  @Override
  public boolean test(String email) {
-  // TODO Auto-generated method stub
-  return true;
+  return false;
  }
 }
